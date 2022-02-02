@@ -1,3 +1,9 @@
+# Ignore MacOS
+.DS_Store
+
+# Ignore API key
+*.api
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
