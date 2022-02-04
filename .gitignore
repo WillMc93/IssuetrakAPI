@@ -4,6 +4,9 @@
 # Ignore API key
 *.api
 
+# Ignore code42 .csv test files
+*.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
