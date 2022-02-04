@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 
 from csv import DictReader
 from datetime import datetime
@@ -10,15 +11,24 @@ CSV_PATH = 'code42.csv'
 api = IssuetrakAPI()
 
 # Read the Code42 csv into a dictionary
-code42 = DictReader(CSV_PATH)
+code42 = None
+with open(CSV_PATH) as csvfile:
+    code42 = DictReader(csvfile)
 
+    
 
 #######################################
 # POST
 # Insert issue into Issuetrak
 #######################################
 
+response = api.performGet('/issues/false/18875')
+response_data = response.read().decode()
+print(response_data)
+
+
 # Set disabled/inactive fields to None
+"""
 requestBody = {
   "ShouldSuppressEmailForCreateOperation": True,
   "Notes": [
@@ -71,6 +81,7 @@ requestBody = {
   "SpecialFunction4": "string",
   "SpecialFunction5": "string"
 }
+"""
 
 print("\n\n------Insert Issue------")
 #response = apiAuthorization.performPost("/issues", "", json.dumps(requestBody))
