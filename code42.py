@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import json
+
 from csv import DictReader
 from datetime import datetime
 
@@ -24,10 +26,22 @@ with open(CSV_PATH) as csvfile:
 
 response = api.performGet('/issues/false/18875')
 response_data = response.read().decode()
-print(response_data)
+decode = json.JSONDecoder()
+decoded = decode.decode(response_data)
+
+for d in decoded:
+    print(f'{d}: {decoded[d]}')
+    print('\n')
 
 
 # Set disabled/inactive fields to None
+request_template = {
+    "ShouldNeverSendEmailForIssue": True,
+    
+}
+
+
+
 """
 requestBody = {
   "ShouldSuppressEmailForCreateOperation": True,
