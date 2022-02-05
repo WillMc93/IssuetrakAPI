@@ -7,17 +7,67 @@ from datetime import datetime
 
 from IssuetrakAPI import IssuetrakAPI
 
-CSV_PATH = 'code42.csv'
+"""
+Constants
+"""
+# Path to the alert csv file
+CSV_PATH = 'code42_alerts.csv'
 
-# Inititialize the API class
-api = IssuetrakAPI()
+# JSON ticket template
+TICKET_TEMPLATE = {
+	"ShouldNeverSendEmailForIssue": True,
+	
+}
 
-# Read the Code42 csv into a dictionary
-code42 = None
-with open(CSV_PATH) as csvfile:
-    code42 = DictReader(csvfile)
 
-    
+"""
+Function definitions
+"""
+def extract_info(alert: dict) -> dict:
+	# Extract needed info from the code42 alert entry
+	extract = {}
+	extract['username'] = alert['username']
+	extract['compname'] = alert['deviceName']
+	extract['last_connect'] = alert['lastConnectedDate']
+	extract['last_backup'] = alert['lastCompletedBackupDate']
+
+	return extract
+
+
+def build_ticket(username: str, compname: str, last_connect: str, last_backup: str):
+	# Fill out the code42 json dictonary
+
+	ticket = TICKET_TEMPLATE.copy()
+
+	# TODO: Fillout ticket
+
+	return ticket
+
+
+"""
+Main
+"""
+if __name__ == '__main__':
+	# Inititialize the API class
+	api = IssuetrakAPI()
+
+	# Read the code42 alerts and build the tickets
+	tickets = []
+	with open(CSV_PATH) as csvfile:
+		code42 = DictReader(csvfile)
+
+		for alert in code42:
+			info = extract_info(alert)
+			tickie = build_ticket(*info)
+			tickets.append(tickie)
+
+	# Submit the tickets via post
+	for tickie in tickets:
+		response = apiAuthorization.performPost("/issues", "", json.dumps(requestBody))
+
+
+
+	
 
 #######################################
 # POST
@@ -26,77 +76,7 @@ with open(CSV_PATH) as csvfile:
 
 response = api.performGet('/issues/false/18875')
 response_data = response.read().decode()
-decode = json.JSONDecoder()
-decoded = decode.decode(response_data)
+json_decoder = json.JSONDecoder()
+decoded = json_decoder.decode(response_data)
 
-for d in decoded:
-    print(f'{d}: {decoded[d]}')
-    print('\n')
-
-
-# Set disabled/inactive fields to None
-request_template = {
-    "ShouldNeverSendEmailForIssue": True,
-    
-}
-
-
-
-"""
-requestBody = {
-  "ShouldSuppressEmailForCreateOperation": True,
-  "Notes": [
-    {
-      "CreatedDate": f"{datetime.now()}",
-      "CreatedBy": "Code42 Script",
-      "NoteText": "This is a note",
-      "IsPrivate": False,
-      "IsRichText": True
-    }
-  ],
-  "UserDefinedFields": [
-    {
-      "UserDefinedFieldID": 1,
-      "Value": "This is text that will go into one of my user defined fields"
-    },
-    {
-      "UserDefinedFieldID": 1008,
-      "Value": f"{datetime.now().strftime('%Y-%m-%dT%H:%M:%S')}"
-    }
-  ],
-  "SubmittedDate": f"{datetime.now()}",
-  "EnteredBy": "admin",
-  "SeverityID": None,
-  "Subject": "This is a test subject submitted via the Issuetrak API in Python",
-  "Description": "This is the description of the test issue",
-  "IsDescriptionRichText": True,
-  "IssueTypeID": 1,
-  "IssueSubTypeID": 0,
-  "IssueSubType2ID": 0,
-  "IssueSubType3ID": 0,
-  "IssueSubType4ID": None,
-  "PriorityID": 1,
-  "AssetNumber": 0,
-  "LocationID": "",
-  "SubmittedBy": "admin",
-  "AssignedTo": None,
-  "TargetDate": None,
-  "RequiredByDate": None,
-  "NextActionTo": None,
-  "SubStatusID": 0,
-  "ProjectID": 0,
-  "OrganizationID": 1,
-  "ShouldNeverSendEmailForIssue": False,
-  "ClassID": 1,
-  "DepartmentID": None,
-  "SpecialFunction1": "string",
-  "SpecialFunction2": "string",
-  "SpecialFunction3": "string",
-  "SpecialFunction4": "string",
-  "SpecialFunction5": "string"
-}
-"""
-
-print("\n\n------Insert Issue------")
-#response = apiAuthorization.performPost("/issues", "", json.dumps(requestBody))
 print(response.read().decode())
