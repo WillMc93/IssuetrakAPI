@@ -8,7 +8,7 @@ import base64
 import http.client
 
 SITE_URL = 'https://harbert.issuetrak.com/api/v1'
-API_KEY_PATH = 'key.api'
+API_KEY_PATH = 'api.key'
 
 def read_APIkey():
     key = ''

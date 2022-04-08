@@ -2,7 +2,7 @@
 .DS_Store
 
 # Ignore API key
-*.api
+*.key
 
 # Ignore code42 .csv test files
 *.csv
