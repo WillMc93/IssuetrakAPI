@@ -1,6 +1,5 @@
 # Standard Library
 import json
-from urllib.parse import urljoin
 
 # PyPI
 import requests
@@ -8,20 +7,20 @@ import requests
 SITE_URL = 'https://harbert.issuetrak.com/api/v2'
 API_KEY_PATH = 'api2.key'
 
-def read_api_key():
-# Function for reading an API key from a UTF-8 file
+def read_api_key(key_path=API_KEY_PATH: str) -> str:
+	"""Function for reading an API key from a UTF-8 file"""
 	key = ''
 	with open(API_KEY_PATH) as kf:
 		key = kf.readline().strip()
 	return key
 
 class IssuetrakAPI:
-	__api_key = ''
-	__site_url = ''
 
-	def __init__(self, api_key: str, site_url: str):
-		self.__api_key = api_key
-		self.__site_url = site_url
+	def __init__(self, api_key='': str, site_url=SITE_URL: str):
+		if api_key = ''
+			api_key = read_api_key()
+		self.api_key = api_key
+		self.site_url = site_url
 
 	def __generate_headers(self, request_type: str) -> dict:
 		"""Generates and returns a dict containing the necessary request headers"""
@@ -52,7 +51,33 @@ class IssuetrakAPI:
 		headers = __generate_headers('GET')
 
 		# Form full URL
-		url = ''.join([self.__site_url, endpoint_url])
+		url = '/'.join([self.site_url, endpoint_url])
 
 		# Do it
 		return requests.get(url, headers=headers)
+
+	def perfrom_post(self, endpoint_url: str, request_body: dict) -> requests.Response:
+		"""Send POST request to issuetrak at the endpoint_url and
+			return a request.Response object.
+		"""
+
+		# Get headers for POST
+		headers = __generate_headers('POST')
+
+		# Form full URL
+		url = '/'.join([self.site_url, endpoint_url])
+
+		return requests.post(url, headers=headers, data=json.dumps(request_body))
+
+	def perform_put(self, endpoint_url: str, request_body: dict) -> requests.Response:
+		"""Send PUT request to issuetrak at the endpoint_url and 
+			return a request.Response object
+		"""
+
+		# Get headers for PUT
+		headers = __generate_headers('PUT')
+
+		# Form full URL
+		url = '/'.join([self.site_url, endpoint_url])
+
+		return requests.put(url, headers=headers, data=json.dumps(request_body))
