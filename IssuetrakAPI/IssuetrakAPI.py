@@ -4,21 +4,9 @@ import json
 # PyPI
 import requests
 
-SITE_URL = 'https://harbert.issuetrak.com/api/v2'
-API_KEY_PATH = 'api2.key'
-
-def read_api_key(key_path=API_KEY_PATH: str) -> str:
-	"""Function for reading an API key from a UTF-8 file"""
-	key = ''
-	with open(API_KEY_PATH) as kf:
-		key = kf.readline().strip()
-	return key
-
 class IssuetrakAPI:
 
-	def __init__(self, api_key='': str, site_url=SITE_URL: str):
-		if api_key = ''
-			api_key = read_api_key()
+	def __init__(self, api_key: str, site_url: str):
 		self.api_key = api_key
 		self.site_url = site_url
 
@@ -48,7 +36,7 @@ class IssuetrakAPI:
 		"""
 
 		# Get headers for GET 
-		headers = __generate_headers('GET')
+		headers = self.__generate_headers('GET')
 
 		# Form full URL
 		url = '/'.join([self.site_url, endpoint_url])
@@ -62,7 +50,7 @@ class IssuetrakAPI:
 		"""
 
 		# Get headers for POST
-		headers = __generate_headers('POST')
+		headers = self.__generate_headers('POST')
 
 		# Form full URL
 		url = '/'.join([self.site_url, endpoint_url])
@@ -75,7 +63,7 @@ class IssuetrakAPI:
 		"""
 
 		# Get headers for PUT
-		headers = __generate_headers('PUT')
+		headers = self.__generate_headers('PUT')
 
 		# Form full URL
 		url = '/'.join([self.site_url, endpoint_url])
