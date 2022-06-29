@@ -149,3 +149,14 @@ class Issuetrak:
 	def get_users_organizations(self, user_iid: str) -> dict:
 		"""Get user's organization memeberships"""
 		pass
+
+	
+	"""
+	Define all POST requests
+
+	All return a tuple of the traceID string and the data as a dict indexed by iid
+	"""
+	def post_departments_search(self, department_filter: dict) -> dict:
+		pass
+
+	def 
