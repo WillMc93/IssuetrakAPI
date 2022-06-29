@@ -10,9 +10,7 @@ setup(
 		author_email='wmcelhenney93@gmail.com',
 		description=DESCRIPTION,
 		packages=find_packages(),
-        install_requires=[requests], # add any additional packages that 
-        # needs to be installed along with your package. Eg: 'caer'
-        
+        install_requires=[requests],
         keywords=['python', 'Issuetrak', 'API'],
         classifiers= [
             "Development Status :: 3 - Alpha",
