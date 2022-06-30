@@ -20,14 +20,13 @@ class IssuetrakAPI:
 		self.api_url = api_url
 
 
-	def __compute_hash(self, api_key:str, message:str) -> str:
+	def __compute_hash(self, message:str) -> str:
 		hash_text = None
-		api_key_bytes = bytes(api_key, 'UTF-8')
+		api_key_bytes = bytes(self.api_key, 'UTF-8')
 		message_bytes = bytes(message, 'UTF-8')
 
 		hmac_hash = hmac.new(api_key_bytes, message_bytes, sha512).digest()
 		hash_text = base64.b64encode(hmac_hash).decode('UTF-8')
-		
 		return hash_text
 
 
@@ -47,16 +46,18 @@ class IssuetrakAPI:
 		return url
 	
 
-	def __generate_headers(self, url:hyperlink.DecodedURL, http_verb='', request_query = '', request_body = ''):
+	def __generate_headers(self, url:hyperlink.DecodedURL, http_verb='', request_query = '', request_body = '') -> dict:
 		"""
 		Generate the necessary headers for an api call
 		"""
 		request_id = str(uuid4()).lower()
 		timestamp = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f0Z")
 		url_path = '/'.join(url.path)
+		url_path = '/' + url_path.lower()
+		print(url_path)
 		
 		message = '\n'.join([http_verb, request_id, timestamp, url_path, request_query, request_body])
-		hashed_message = self.__compute_hash(self.api_key, message)
+		hashed_message = self.__compute_hash(message)
 		
 		headers = {"X-IssueTrak-API-Request-ID": request_id,
 			"X-IssueTrak-API-Timestamp": timestamp,
