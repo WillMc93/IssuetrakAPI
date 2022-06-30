@@ -1,10 +1,11 @@
-from uuid import uuid4
-from urllib.parse import urlparse
-from hashlib import sha512
-from datetime import datetime
+import base64
 import hmac
 import json
-import base64
+import re
+from datetime import datetime
+from hashlib import sha512
+from urllib.parse import urlparse
+from uuid import uuid4
 
 import hyperlink
 import requests
