@@ -4,7 +4,6 @@ import json
 import re
 from datetime import datetime
 from hashlib import sha512
-from urllib.parse import urlparse
 from uuid import uuid4
 
 import hyperlink
