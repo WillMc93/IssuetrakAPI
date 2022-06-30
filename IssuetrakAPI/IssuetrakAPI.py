@@ -1,16 +1,17 @@
 import base64
 import hmac
-import json
 import re
 from datetime import datetime
 from hashlib import sha512
 from uuid import uuid4
 
+import pdb
+
 import hyperlink
 import requests
 
 
-RE_CLEAN_HYPERLINK = re.compile(r'(?<!^https:)//')
+RE_CLEAN_HYPERLINK = re.compile(r'(?<!^https:)/{2,}')
 
 
 class IssuetrakAPI:
@@ -35,27 +36,27 @@ class IssuetrakAPI:
 		Makes sure that the url is normalized and returns it as a hyperlink object
 		"""
 		full_url = '/'.join([self.api_url, endpoint_url])
+		
 
 		# Clean extraneous slashes
-		while RE_CLEAN_HYPERLINK.match(full_url):
-			full_url = RE_CLEAN_HYPERLINK.sub('/', full_url)
+		full_url = RE_CLEAN_HYPERLINK.sub('/', full_url)
 
 		# Get hyperlink and normalize
 		url = hyperlink.parse(full_url)
 		url = url.normalize()
-
 		return url
 	
 
-	def __generate_headers(self, url:hyperlink.DecodedURL, request_query = "", request_body = ""):
+	def __generate_headers(self, url:hyperlink.DecodedURL, http_verb='', request_query = '', request_body = ''):
 		"""
 		Generate the necessary headers for an api call
 		"""
 		request_id = str(uuid4()).lower()
 		timestamp = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.%f0Z")
-		url_path = url.path
-		message = '\n'.join([http_verb, request_id, time_stamp, url_path, request_query, request_body])
-		hashed_message = self.__compute_hash(self.__apiKey, message)
+		url_path = '/'.join(url.path)
+		
+		message = '\n'.join([http_verb, request_id, timestamp, url_path, request_query, request_body])
+		hashed_message = self.__compute_hash(self.api_key, message)
 		
 		headers = {"X-IssueTrak-API-Request-ID": request_id,
 			"X-IssueTrak-API-Timestamp": timestamp,
@@ -66,18 +67,18 @@ class IssuetrakAPI:
 
 
 	def perform_get(self, endpoint_url):
-		url = __sanitize_url(endpoint_url)
-		headers = __generate_headers(url)
+		url = self.__sanitize_url(endpoint_url)
+		headers = self.__generate_headers(url, 'GET')
 		return requests.get(url.to_text(), headers)
 
 
 	def perform_post(self, endpoint_url, request_query = '', request_body = ''):
-		url = __sanitize_url(endpoint_url)
-		headers = __generate_headers(url, request_query, request_body)
+		url = self.__sanitize_url(endpoint_url)
+		headers = self.__generate_headers(url, 'POST', request_query, request_body)
 		return requests.post(url.to_text(), headers)
 
 
 	def perform_put(self, endpoint_url, request_query = '', request_body = ''):
-		url = __sanitize_url(endpoint_url)
-		headers = __generate_headers(url, request_query, request_body)
+		url = self.__sanitize_url(endpoint_url)
+		headers = self.__generate_headers(url, 'PUT', request_query, request_body)
 		return requests.put(url.to_text(), headers)
