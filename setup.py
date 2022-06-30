@@ -10,7 +10,7 @@ setup(
 		author_email='wmcelhenney93@gmail.com',
 		description=DESCRIPTION,
 		packages=find_packages(),
-        install_requires=[requests],
+        install_requires=[requests, hyperlink],
         keywords=['python', 'Issuetrak', 'API'],
         classifiers= [
             "Development Status :: 3 - Alpha",
