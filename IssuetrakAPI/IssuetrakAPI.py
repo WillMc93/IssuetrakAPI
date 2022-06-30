@@ -10,7 +10,7 @@ import hyperlink
 import requests
 
 
-RE_VALID_HYPERLINK = re.compile(r'(?<!^https:)//')
+RE_CLEAN_HYPERLINK = re.compile(r'(?<!^https:)//')
 
 
 class IssuetrakAPI:
@@ -37,8 +37,8 @@ class IssuetrakAPI:
 		full_url = '/'.join([self.api_url, endpoint_url])
 
 		# Clean extraneous slashes
-		while RE_VALID_HYPERLINK.match(full_url):
-			full_url = RE_VALID_HYPERLINK.sub('/', full_url)
+		while RE_CLEAN_HYPERLINK.match(full_url):
+			full_url = RE_CLEAN_HYPERLINK.sub('/', full_url)
 
 		# Get hyperlink and normalize
 		url = hyperlink.parse(full_url)
