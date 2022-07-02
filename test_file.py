@@ -6,4 +6,4 @@ api = IssuetrakAPI.IssuetrakAPI(key, url)
 
 r = api.perform_get('users')
 print(r)
-print(r.status)
+print(r.status_code)
