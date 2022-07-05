@@ -106,7 +106,7 @@ class API_Connector:
 		"""
 		return self.__api_call('POST', endpoint_url, request_query, request_body)
 
-	def perform_put(self, endpoint_url, request_query = '', request_body = '') -> requests.Response:
+	def perform_put(self, endpoint_url:str, request_query:str='', request_body:str='') -> requests.Response:
 		"""
 		Make a PUT request
 		"""
