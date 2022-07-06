@@ -80,15 +80,14 @@ class API_Connector:
 		response = None		
 		with self.session as sess:
 			url_text = url.to_text()
-			match http_verb:
-				case 'GET':
-					response = sess.get(url=url_text, headers=headers)
-				case 'POST':
-					response = sess.post(url=url_text, headers=headers, data=request_body)
-				case 'PUT':
-					response = sess.put(url=url_text, headers=headers, data=request_body)
-				case _:
-					raise Exception("The HTTP verb {http_verb} is unimplemented or invalid.")
+			if http_verb == 'GET':
+				response = sess.get(url=url_text, headers=headers)
+			elif http_verb == 'POST':
+				response = sess.post(url=url_text, headers=headers, data=request_body)
+			elif http_verb == 'PUT':
+				response = sess.put(url=url_text, headers=headers, data=request_body)
+			else:
+				raise Exception("The HTTP verb {http_verb} is unimplemented or invalid.")
 
 		return response
 
