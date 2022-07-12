@@ -8,6 +8,8 @@ from uuid import uuid4
 import hyperlink
 import requests
 
+from api_definitions import RequestException
+
 RE_CLEAN_HYPERLINK = re.compile(r'(?<!^https:)/{2,}')
 
 class API_Connector:
@@ -58,7 +60,8 @@ class API_Connector:
 		absolute_path = '/'.join(url.path)
 		absolute_path = '/' + absolute_path.lower()
 		
-		message = '\n'.join([http_verb, request_id, timestamp, absolute_path, request_query, request_body])
+		message = [http_verb, request_id, timestamp, absolute_path, request_query, request_body]
+		message = '\n'.join(message)
 		hashed_message = self.__compute_hash(message)
 		headers = {"X-IssueTrak-API-Request-ID": request_id,
 			"X-IssueTrak-API-Timestamp": timestamp,
@@ -68,20 +71,22 @@ class API_Connector:
 		return headers
 	
 
-	def __api_call(self, http_verb:str, endpoint_url:str, request_query:str='', request_body:str='') ->requests.Response:
+	def __api_call(self, http_verb:str, endpoint_url:str, request_query:str='', request_body:str='') -> dict:
 		"""
 		Generalized backend for requests to the API. 
 		Makes sure the URL work is done and generates the headers before making the HTTP request.
 		
 		Will raise an exception if the http_verb has not been implemented.
+		Will raise a RequestException (api_definitions.py) if the request does not return a 200 status.
 		"""
 		url = self.__sanitize_url(endpoint_url)
+		url_text = url.to_text()
 		headers = self.__generate_headers(url, http_verb, request_query, request_body)
 		response = None		
 		with self.session as sess:
 			url_text = url.to_text()
 			if http_verb == 'GET':
-				response = sess.get(url=url_text, headers=headers)
+				response = sess.get(url=url_text, headers=headers).content
 			elif http_verb == 'POST':
 				response = sess.post(url=url_text, headers=headers, data=request_body)
 			elif http_verb == 'PUT':
@@ -89,23 +94,28 @@ class API_Connector:
 			else:
 				raise Exception("The HTTP verb {http_verb} is unimplemented or invalid.")
 
+		if r.status_code == 200:
+			response = response.json()
+		else:
+			raise RequestException(http_verb=http_verb, url=url_text, status=response.status_code)
+
 		return response
 
 
-	def perform_get(self, endpoint_url:str) -> requests.Response:
+	def perform_get(self, endpoint_url:str) -> dict:
 		"""
 		Make a GET request
 		"""
 		return self.__api_call('GET', endpoint_url)
 
 
-	def perform_post(self, endpoint_url:str, request_query:str='', request_body:str='') -> requests.Response:
+	def perform_post(self, endpoint_url:str, request_query:str='', request_body:str='') -> dict:
 		"""
 		Make a POST request
 		"""
 		return self.__api_call('POST', endpoint_url, request_query, request_body)
 
-	def perform_put(self, endpoint_url:str, request_query:str='', request_body:str='') -> requests.Response:
+	def perform_put(self, endpoint_url:str, request_query:str='', request_body:str='') -> dict:
 		"""
 		Make a PUT request
 		"""
