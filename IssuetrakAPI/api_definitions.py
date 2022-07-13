@@ -8,10 +8,19 @@ class Connector_Cache:
 	def __init__(self, api_connector:API_Connector):
 		self.connector = api_connector
 
+
 class RequestException(Exception):
-	def __init__(self, http_verb:str, url:str):
-		message = f'Request to API failed with verb: {http_verb} url: {url} combo.'
-		super().__init__(message)class GenericCaller(ConnectorCache):
+	"""
+	Exception to be raised whenever a request encounters a problem.
+	Displays the status code, and the verb/endpoint combo in question
+	"""
+	def __init__(self, http_verb:str, url:str, status_code:int):
+		message = f'Request to API failed (status: {status_code}) with verb: '
+				f'{http_verb} url: {url} combo.'
+		super().__init__(message)
+
+
+class GenericCaller(ConnectorCache):
 	"""
 	A class for all requestors that just need a get by id, and a get all with
 	no server-side filtering/decoding.
