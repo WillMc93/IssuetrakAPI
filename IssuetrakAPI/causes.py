@@ -1,11 +1,8 @@
-from IssuetrakAPI.api_connector import API_Connector
-from IssuetrakAPI.api_definitions import Connector_Cache
+from IssuetrakAPI.api_connector import APIConnector
+from IssuetrakAPI.api_definitions import GenericCaller
 
 
-class CausesMixIn(API_Connector):
-	def __init__(self, connector):
-		self.connector = connector
-		self.causes = None
+class CausesMixIn(APIConnector):
 
 	def causes(self):
 		if self.causes is None:
