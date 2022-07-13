@@ -12,7 +12,7 @@ from api_definitions import RequestException
 
 RE_CLEAN_HYPERLINK = re.compile(r'(?<!^https:)/{2,}')
 
-class API_Connector:
+class APIConnector:
 	def __init__(self, api_key: str, api_url: str):
 		"""
 		Constructor records the api key, the host url, and starts a requests session
