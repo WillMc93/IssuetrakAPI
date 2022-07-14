@@ -22,8 +22,8 @@ class RequestException(Exception):
 
 class GenericCaller(ConnectorCache):
 	"""
-	A class for all requestors that just need a get by id, and a get all with
-	no server-side filtering/decoding.
+	A class for all requestors that just need to provide returning by id, 
+	and returning all with no server-side filtering/decoding.
 
 	Classes of this type include:
 		* Causes
@@ -32,6 +32,11 @@ class GenericCaller(ConnectorCache):
 		* Locations
 		* Menu
 		* Organizations
+		* Priorities
+		* ServiceLevels (Agreements, Severities, and Terms)
+		* Substatuses
+		* TimeZones
+		* UserDefinedFieldTypes
 	"""
 	def __init__(self, connector:APIConnector, endpoint_url:str):
 		super(GenericCaller, self).__init__(connector)
