@@ -3,9 +3,13 @@ from IssuetrakAPI.api_definitions import GenericCaller
 
 
 class ServiceLevelMixIn(APIConnector):
+	"""
+	Mix-in class providing convenient namespace for accessing Service Level information
+	"""
 	def service_levels(self):
 		if self.service_levels is None:
-			return self.service_levels = ServiceLevels(self, 'servicelevels/')
+			self.service_levels = ServiceLevels(self, 'servicelevels/')
+		return self.service_levels
 
 	def service_level_agreements(self):
 		if self.service_level_agreements is None:

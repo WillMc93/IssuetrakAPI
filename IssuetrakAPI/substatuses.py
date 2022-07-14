@@ -3,9 +3,12 @@ from IssuetrakAPI.api_definitions import GenericCaller
 
 
 class SubstatusesMixIn(APIConnector):
+	"""
+	Mix-in class providing convenient namespace for accessing Substatuses
+	"""
 	def substatuses(self):
 		if self.substatuses is None:
-			return self.substatuses = Substatuses(self, 'substatuses/')
+			self.substatuses = Substatuses(self, 'substatuses/')
 		return self.substatuses
 
 
