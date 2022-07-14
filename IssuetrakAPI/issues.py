@@ -43,9 +43,21 @@ class IssuesMixIn(APIConnector):
 		return self._issue_subtypes4
 
 
-class Issues(ConnectorCache, GenericCaller):
+class Issues(ConnectorCache):
+	"""
+	A class providing access to issues. 
+	"""
 	def __init__(self,api_connector:APIConnector, endpoint_url:str)
+		super().__init__(api_connector=api_connector)
+		self.endpoint_url = endpoint_url
 
+	def get_by_id(issue_numbers:int|list(int), include_notes=False):
+		if type(issue_number) is int:
+			endpoint_url = f'{self.endpoint_url}/{include_notes}/{issue_numbers}'
+		elif type(issue_number) is list:
+			issue_str = ','.join(issue_numbers)
+			endpoint_url = f'{self.endpoint_url}/{include_notes}/?issueNumbers={issue_str}'
+		return self.perform_get(endpoint_url)
 
 
 

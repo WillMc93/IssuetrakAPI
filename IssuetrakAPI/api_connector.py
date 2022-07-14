@@ -8,7 +8,7 @@ from uuid import uuid4
 import hyperlink
 import requests
 
-from api_definitions import RequestException
+from api_exceptions import RequestException
 
 RE_CLEAN_HYPERLINK = re.compile(r'(?<!^https:)/{2,}')
 
