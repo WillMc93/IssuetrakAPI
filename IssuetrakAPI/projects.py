@@ -5,7 +5,7 @@ from IssuetrakAPI.api_definitions import GenericCaller
 class ProjectsMixIn(APIConnector):
 	def projects(self):
 		if self.projects is None:
-			return self.projects = Projects(self, 'organizations/')
+			return self.projects = Projects(self, 'projects/')
 		return self.projects
 
 
