@@ -38,7 +38,7 @@ class GenericCaller(ConnectorCache):
 		* TimeZones
 		* UserDefinedFieldTypes
 	"""
-	def __init__(self, connector:APIConnector, endpoint_url:str):
+	def __init__(self, api_connector:APIConnector, endpoint_url:str):
 		super(GenericCaller, self).__init__(connector)
 		self.endpoint_url = endpoint_url
 		

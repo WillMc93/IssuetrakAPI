@@ -16,8 +16,8 @@ class Metadata(ConnectorCache):
 	A class providing http access to metadata. Issuetrak currently only supports 
 	returning this info as a complete set, so this couldn't be a Generic Caller.
 	"""
-	def __init__(self, connector, endpoint_url):
-		self.connector = connector
+	def __init__(self, api_connector:APIConnector, endpoint_url:str):
+		self.api_connector = api_connector
 		self.endpoint_url = endpoint_url
 
 	def get() -> dict:
