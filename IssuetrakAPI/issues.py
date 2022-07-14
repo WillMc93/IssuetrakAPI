@@ -47,27 +47,37 @@ class IssueTypes(GenericCaller):
 	"""
 	A Generic Caller class for Issue Types providing access by ID or as a complete set.
 	"""
+	def __init__(self, connector:APIConnector, endpoint_url:str):
+		super().__init__(connector=connector, endpoint_url=endpoint_url)
 
 
 class IssueSubTypes1(GenericCaller):
 	"""
 	A Generic Caller class for Issue Subtypes 1 providing access by ID or as a complete set.
 	"""
+	def __init__(self, connector:APIConnector, endpoint_url:str):
+		super().__init__(connector=connector, endpoint_url=endpoint_url)
 
 
 class IssueSubTypes2(GenericCaller):
 	"""
 	A Generic Caller class for Issue Subtypes 2 providing access by ID or as a complete set.
 	"""
+	def __init__(self, connector:APIConnector, endpoint_url:str):
+		super().__init__(connector=connector, endpoint_url=endpoint_url)
 
 
 class IssueSubTypes3(GenericCaller):
 	"""
 	A Generic Caller class for Issue Subtypes 3 providing access by ID or as a complete set.
 	"""
+	def __init__(self, connector:APIConnector, endpoint_url:str):
+		super().__init__(connector=connector, endpoint_url=endpoint_url)
 
 
 class IssueSubTypes4(GenericCaller):
 	"""
 	A Generic Caller class for Issue Subtypes 4 providing access by ID or as a complete set.
 	"""
+	def __init__(self, connector:APIConnector, endpoint_url:str):
+		super().__init__(connector=connector, endpoint_url=endpoint_url)

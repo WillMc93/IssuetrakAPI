@@ -18,3 +18,5 @@ class UserDefinedFieldTypes(GenericCaller):
 	A Generic Caller class that provides getting by ID and getting all for
 	User Defined Field Types
 	"""
+	def __init__(self, connector:APIConnector, endpoint_url:str):
+		super().__init__(connector=connector, endpoint_url=endpoint_url)

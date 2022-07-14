@@ -35,21 +35,29 @@ class ServiceLevels(GenericCaller):
 	"""
 	A Generic Caller class for Service Levels providing access by ID or as a complete set.
 	"""
+	def __init__(self, connector:APIConnector, endpoint_url:str):
+		super().__init__(connector=connector, endpoint_url=endpoint_url)
 
 
 class ServiceLevelAgreements(GenericCaller):
 	"""
 	A Generic Caller class for Service Levels Agreements providing access by ID or as a complete set.
 	"""
+	def __init__(self, connector:APIConnector, endpoint_url:str):
+		super().__init__(connector=connector, endpoint_url=endpoint_url)
 
 
 class ServiceLevelSeverities(GenericCaller):
 	"""
 	A Generic Caller class for Service Levels Severities providing access by ID or as a complete set.
 	"""
+	def __init__(self, connector:APIConnector, endpoint_url:str):
+		super().__init__(connector=connector, endpoint_url=endpoint_url)
 
 
 class ServiceLevelTerms(GenericCaller):
 	"""
 	A Generic Caller class for Service Levels Terms providing access by ID or as a complete set.
 	"""
+	def __init__(self, connector:APIConnector, endpoint_url:str):
+		super().__init__(connector=connector, endpoint_url=endpoint_url)

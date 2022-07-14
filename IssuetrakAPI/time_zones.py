@@ -17,3 +17,5 @@ class TimeZones(GenericCaller):
 	"""
 	A Generic Caller class that provides access to Time Zones by ID or the full set
 	"""
+	def __init__(self, connector:APIConnector, endpoint_url:str):
+		super().__init__(connector=connector, endpoint_url=endpoint_url)
