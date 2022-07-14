@@ -44,7 +44,7 @@ class GenericCaller(ConnectorCache):
 		
 	def get_by_id(_id:int) -> dict:
 		endpoint_url = f'{self.endpoint_url}/{_id}'
-		return self.connector.perform_post(endpoint_url=self.endpoint_url)
+		return self.connector.perform_get(endpoint_url=self.endpoint_url)
 
 	def get_all() -> dict:
 		return = self.connector.perform_get(endpoint_url=self.endpoint_url)
