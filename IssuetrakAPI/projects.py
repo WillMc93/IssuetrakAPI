@@ -3,12 +3,17 @@ from IssuetrakAPI.api_definitions import GenericCaller
 
 
 class ProjectsMixIn(APIConnector):
+	"""
+	Mix-in class providing convenient namespace for accessing Projects
+	"""
+	@property
 	def projects(self):
-		if self.projects is None:
-			return self.projects = Projects(self, 'projects/')
-		return self.projects
+		if self._projects is None:
+			self._projects = Projects(self, 'projects/')
+		return self._projects
 
 
 class Projects(GenericCaller):
-	def __init__(self, connector, endpoint_url):
-		super().__init__(connector, endpoint_url)
+	"""
+	A Generic Caller class for Projects providing access by ID or as a complete set.
+	"""

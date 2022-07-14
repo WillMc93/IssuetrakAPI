@@ -3,12 +3,17 @@ from IssuetrakAPI.api_definitions import GenericCaller
 
 
 class OrganizationsMixIn(APIConnector):
+	"""
+	Mix-in class providing convenient namespace for accessing Organizations
+	"""
+	@property
 	def organizations(self):
-		if self.organizations is None:
-			return self.organizations = Organizations(self, 'organizations/')
-		return self.organizations
+		if self._organizations is None:
+			self._organizations = Organizations(self, 'organizations/')
+		return self._organizations
 
 
 class Organizations(GenericCaller):
-	def __init__(self, connector, endpoint_url):
-		super().__init__(connector, endpoint_url)
+	"""
+	A Generic Caller class for Organizations providing access by ID or as a complete set.
+	"""

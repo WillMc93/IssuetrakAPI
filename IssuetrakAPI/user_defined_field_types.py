@@ -6,10 +6,11 @@ class UserDefinedFieldTypesMixIn(APIConnector):
 	"""
 	Mix-in class providing convenient namespace for accessing User Defined Field Types
 	"""
+	@property
 	def user_defined_field_types(self):
-		if self.user_defined_field_types is None:
-			return self.user_defined_field_types = UserDefinedFieldTypes(self, 'userdefinedfieldtypes/')
-		return self.user_defined_field_types
+		if self._user_defined_field_types is None:
+			self._user_defined_field_types = UserDefinedFieldTypes(self, 'userdefinedfieldtypes/')
+		return self._user_defined_field_types
 
 
 class UserDefinedFieldTypes(GenericCaller):

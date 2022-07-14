@@ -6,10 +6,11 @@ class TimeZonesMixIn(APIConnector):
 	"""
 	Mix-in class providing convenient namespace for accessing Time Zones
 	"""
+	@property
 	def time_zones(self):
-		if self.time_zones is None:
-			self.time_zones = Projects(self, 'timezones/')
-		return self.time_zones
+		if self._time_zones is None:
+			self._time_zones = Projects(self, 'timezones/')
+		return self._time_zones
 
 
 class TimeZones(GenericCaller):

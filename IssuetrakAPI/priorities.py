@@ -3,12 +3,17 @@ from IssuetrakAPI.api_definitions import GenericCaller
 
 
 class PrioritiesMixIn(APIConnector):
+	"""
+	Mix-in class providing convenient namespace for accessing Substatuses
+	"""
+	@property
 	def priorities(self):
-		if self.priorities is None:
-			return self.priorities = Priorities(self, 'priorities/')
-		return self.priorities
+		if self._priorities is None:
+			self._priorities = Priorities(self, 'priorities/')
+		return self._priorities
 
 
 class Priorities(GenericCaller):
-	def __init__(self, connector, endpoint_url):
-		super().__init__(connector, endpoint_url)
+	"""
+	A Generic Caller class for Priorities providing access by ID or as a complete set.
+	"""

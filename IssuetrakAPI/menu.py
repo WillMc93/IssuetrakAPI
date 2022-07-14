@@ -3,12 +3,17 @@ from IssuetrakAPI.api_definitions import GenericCaller
 
 
 class MenuMixIn(APIConnector):
+	"""
+	Mix-in class providing convenient namespace for accessing Substatuses
+	"""
+	@property
 	def menu(self):
-		if self.menu is None:
-			return self.menu = menu(self, 'menuitems/')
-		return self.menu
+		if self._menu is None:
+			self._menu = Menu(self, 'menuitems/')
+		return self._menu
 
 
 class Menu(GenericCaller):
-	def __init__(self, connector, endpoint_url):
-		super(Menu, self).__init__(connector, endpoint_url)
+	"""
+	A Generic Caller class for Menu Items providing access by ID or as a complete set.
+	"""

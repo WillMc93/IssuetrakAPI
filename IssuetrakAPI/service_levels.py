@@ -4,45 +4,52 @@ from IssuetrakAPI.api_definitions import GenericCaller
 
 class ServiceLevelMixIn(APIConnector):
 	"""
-	Mix-in class providing convenient namespace for accessing Service Level information
+	Mix-in class providing convenient namespaces for accessing Service Level information
 	"""
+	@property
 	def service_levels(self):
-		if self.service_levels is None:
-			self.service_levels = ServiceLevels(self, 'servicelevels/')
-		return self.service_levels
+		if self._service_levels is None:
+			self._service_levels = ServiceLevels(self, 'servicelevels/')
+		return self._service_levels
 
+	@property
 	def service_level_agreements(self):
-		if self.service_level_agreements is None:
-			return self.service_level_agreements = ServiceLevelAgreements(self, 'servicelevelagreements/')
-		return self.service_level_agreements
+		if self._service_level_agreements is None:
+			self._service_level_agreements = ServiceLevelAgreements(self, 'servicelevelagreements/')
+		return self._service_level_agreements
 
+	@property
 	def service_level_severities(self):
-		if self.service_level_severities is None:
-			return self.service_level_severities = ServiceLevelSeverities(self, 'servicelevelseverities/')
-		return self.service_level_severities
+		if self._service_level_severities is None:
+			self._service_level_severities = ServiceLevelSeverities(self, 'servicelevelseverities/')
+		return self._service_level_severities
 
+	@property
 	def service_level_terms(self):
-		if self.service_level_terms is None:
-			return self.service_level_terms = ServiceLevelTerms(self, 'servicelevelterms/')
-		return self.service_level_terms
+		if self._service_level_terms is None:
+			self._service_level_terms = ServiceLevelTerms(self, 'servicelevelterms/')
+		return self._service_level_terms
 
 
 class ServiceLevels(GenericCaller):
-	def __init__(self, connector, endpoint_url):
-		super().__init__(connector, endpoint_url)
+	"""
+	A Generic Caller class for Service Levels providing access by ID or as a complete set.
+	"""
 
 
 class ServiceLevelAgreements(GenericCaller):
-	def __init__(self, connector, endpoint_url):
-		super().__init__(connector, endpoint_url)
+	"""
+	A Generic Caller class for Service Levels Agreements providing access by ID or as a complete set.
+	"""
 
 
 class ServiceLevelSeverities(GenericCaller):
-	def __init__(self, connector, endpoint_url):
-		super().__init__(connector, endpoint_url)
+	"""
+	A Generic Caller class for Service Levels Severities providing access by ID or as a complete set.
+	"""
 
 
 class ServiceLevelTerms(GenericCaller):
-	def __init__(self, connector, endpoint_url):
-		super().__init__(connector, endpoint_url)
-
+	"""
+	A Generic Caller class for Service Levels Terms providing access by ID or as a complete set.
+	"""

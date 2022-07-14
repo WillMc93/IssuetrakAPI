@@ -3,12 +3,17 @@ from IssuetrakAPI.api_definitions import GenericCaller
 
 
 class LocationsMixIn(APIConnector):
+	"""
+	Mix-in class providing convenient namespace for accessing Locations
+	"""
+	@property
 	def locations(self):
-		if self.locations is None:
-			return self.locations = Locations(self, 'locations/')
-		return self.locations
+		if self._locations is None:
+			self._locations = Locations(self, 'locations/')
+		return self._locations
 
 
 class Locations(GenericCaller):
-	def __init__(self, connector, endpoint_url):
-		super(Locations, self).__init__(connector, endpoint_url)
+	"""
+	A Generic Caller class for Locations providing access by ID or as a complete set.
+	"""

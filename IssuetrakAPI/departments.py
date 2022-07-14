@@ -3,12 +3,17 @@ from IssuetrakAPI.api_definitions import GenericCaller
 
 
 class DepartmentsMixIn(APIConnector):
+	"""
+	Mix-in class providing convenient namespace for accessing Departments
+	"""
+	@property
 	def departments(self):
-		if self.departments is None:
-			return self.departments = Departments(self, 'departments/')
-		return self.departments
+		if self._departments is None:
+			self._departments = Departments(self, 'departments/')
+		return self._departments
 
 
 class Departments(GenericCaller):
-	def __init__(self, connector, endpoint_url):
-		super(Departments, self).__init__(connector, endpoint_url)
+	"""
+	A Generic Caller class for Departments providing access by ID or as a complete set.
+	"""

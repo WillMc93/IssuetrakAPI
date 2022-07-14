@@ -6,12 +6,14 @@ class SubstatusesMixIn(APIConnector):
 	"""
 	Mix-in class providing convenient namespace for accessing Substatuses
 	"""
+	@property
 	def substatuses(self):
-		if self.substatuses is None:
-			self.substatuses = Substatuses(self, 'substatuses/')
-		return self.substatuses
+		if self._substatuses is None:
+			self._substatuses = Substatuses(self, 'substatuses/')
+		return self._substatuses
 
 
 class Substatuses(GenericCaller):
-	def __init__(self, connector, endpoint_url):
-		super().__init__(connector, endpoint_url)
+	"""
+	A Generic Caller class for Substatuses providing access by ID or as a complete set.
+	"""
