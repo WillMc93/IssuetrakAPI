@@ -21,4 +21,4 @@ class Metadata(ConnectorCache):
 		self.endpoint_url = endpoint_url
 
 	def get() -> dict:
-		return = self.connector.perform_get(endpoint_url=self.endpoint_url)
+		return = self.api_connector.perform_get(endpoint_url=self.endpoint_url)

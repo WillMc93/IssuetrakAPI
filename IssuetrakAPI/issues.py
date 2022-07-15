@@ -57,7 +57,7 @@ class Issues(ConnectorCache):
 		elif type(issue_number) is list:
 			issue_str = ','.join(issue_numbers)
 			endpoint_url = f'{self.endpoint_url}/{include_notes}/?issueNumbers={issue_str}'
-		return self.perform_get(endpoint_url)
+		return self.api_connector.perform_get(endpoint_url)
 
 
 
